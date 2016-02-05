@@ -1,0 +1,8 @@
+{
+  "raspberry": {
+     "anemometer_pin": 27
+  },
+  "server": {
+    "sync_interval": 0.3
+  }
+}
