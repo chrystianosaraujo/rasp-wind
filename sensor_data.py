@@ -1,4 +1,4 @@
-""" Classes to storage sensors data. """
+""" Classes to store sensors data. """
 
 import threading
 
@@ -34,4 +34,5 @@ class AnemometerData:
 
     def size(self):
        """ Returns the number of anemometer cycles so far. """
+
        return len(self.size)
