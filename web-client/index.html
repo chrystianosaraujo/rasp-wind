@@ -5,13 +5,21 @@
         <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     </head>
     <body>
-        <h1>
-            RaspWind!
-        </h1>
-        <p>
-            {{'Angular is ready!'}}
-        </p>
-        <script type="text/javascript" src="angular.min.js"></script>
-        <script type="text/javascript" src="app.js"></script>
+        <div ng-controller="RaspWindController as controller">
+            <h1>
+                RaspWind
+            </h1>
+            <h2>
+                {{controller.beachName}}
+            </h2>
+            <h3>
+                {{controller.date | date:'EEEE, HH:mm'}}
+            </h3>
+            <h3>
+                {{'Wind speed: '  + controller.windSpeed + ' kts'}}
+            </h3>
+            <script type="text/javascript" src="angular.min.js"></script>
+            <script type="text/javascript" src="app.js"></script>
+        </div>
     </body>
 </html>
