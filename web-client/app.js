@@ -1,1 +1,3 @@
-var app = angular.module('RaspWind', [])
+(function(){
+    var app = angular.module('RaspWind', [])
+})();
