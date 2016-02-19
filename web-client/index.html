@@ -3,6 +3,10 @@
 <html ng-app="RaspWind">
     <head>
         <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+        <!-- TODO: Use local dependencies for angular chart -->
+        <link rel="stylesheet" href=
+  "http://cdn.rawgit.com/jtblin/angular-chart.js/master/dist/angular-chart.css" type=
+  "text/css" />
     </head>
     <body>
         <div ng-controller="RaspWindController as controller">
@@ -18,8 +22,29 @@
             <h3>
                 {{'Wind speed: '  + controller.windSpeed + ' kts'}}
             </h3>
+
         </div>
+        <div ng-controller="LineCtrl">
+            <canvas id="line" class="chart chart-line" chart-data="data"
+                                                       chart-labels="labels"
+                                                       chart-legend="true"
+                                                       chart-series="series"
+                                                       chart-click="onClick">
+            </canvas>
+        </div>
+
+        <!-- Angular -->
         <script type="text/javascript" src="angular.min.js"></script>
         <script type="text/javascript" src="app.js"></script>
+
+        <!-- AngularChart -->
+        <!-- TODO use local dependencies -->
+        <script src="http://cdn.rawgit.com/nnnick/Chart.js/master/Chart.min.js" type=
+        "text/javascript">
+        </script>
+        <script src=
+        "http://cdn.rawgit.com/jtblin/angular-chart.js/master/dist/angular-chart.js"
+                type="text/javascript">
+        </script>
     </body>
 </html>
