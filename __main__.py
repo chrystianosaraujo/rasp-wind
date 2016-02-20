@@ -2,6 +2,7 @@ from app_config import ApplicationConfigData, InvalidConfigFileError
 from sensor_data import AnemometerData
 from sensor_watcher import AnemometerWatcher
 from data_sync import WindServerSynchronizer
+from console_reporter import WindDataConsoleReporter
 
 import threading
 import os
@@ -11,8 +12,6 @@ package_dir = os.path.dirname(os.path.abspath(__file__))
 config_fn = os.path.join(package_dir, "config.json")
 
 def main():
-    print("... RealtimeWind has been started")
-
     try:
         config_data  = ApplicationConfigData(config_fn)
         speed_data   = AnemometerData()
@@ -25,8 +24,10 @@ def main():
         server_sync = WindServerSynchronizer(speed_data,
                                              config_data.server_syncronization_interval(),
                                              stop_event)
+        server_sync.start()
 
-        server_sync.run()
+        reporter = WindDataConsoleReporter(speed_data, config_data.raspberry_console_interval())
+        reporter.start()
 
         # The main thread will keep watching sensors for its whole
         # life cycle.
@@ -43,10 +44,6 @@ def cleanup(stop_event):
 
   # Signal non-daemon threads to finish their jobs
   stop_event.set()
-  while threading.active_count() > 1:
-      pass
-
-  print("... RealtimeWind has been closed")
 
 if __name__ == '__main__':
     main()

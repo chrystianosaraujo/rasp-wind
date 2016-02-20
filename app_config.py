@@ -18,6 +18,12 @@ class ApplicationConfigData:
         """
         return self.anemometer_pin
 
+    def raspberry_console_interval(self):
+        """ Returns the GPIO pin that must be used as the anemometer
+        input pin.
+        """
+        return self.console_interval
+
     def server_syncronization_interval(self):
         """ Returns the interval time, in milliseconds, used to send wind
         conditions to the server.
@@ -29,8 +35,9 @@ class ApplicationConfigData:
             json_file = open(config_fn, "r")
             json_data = json.load(json_file)
 
-            self.anemometer_pin = int(json_data["raspberry"]["anemometer_pin"])
-            self.sync_interval  = float(json_data["server"]["sync_interval"])
+            self.anemometer_pin   = int(json_data["raspberry"]["anemometer_pin"])
+            self.console_interval = int(json_data["raspberry"]["console_report_interval"])
+            self.sync_interval    = float(json_data["server"]["sync_interval"])
 
         except IOError:
             error_msg = "The configuration file does not exist - "
