@@ -18,13 +18,13 @@ def main():
         speed_sensor = AnemometerWatcher(config_data.raspberry_anemometer_pin(),
                                          speed_data)
 
-        # The threading.Event is used to signal non-daemon threads that the 
+        # The threading.Event is used to signal non-daemon threads that the
         # main thread has died.
         stop_event  = threading.Event()
         server_sync = WindServerSynchronizer(speed_data,
                                              config_data.server_syncronization_interval(),
                                              stop_event)
-        server_sync.start()
+        #server_sync.start()
 
         reporter = WindDataConsoleReporter(speed_data, config_data.raspberry_console_interval())
         reporter.start()
@@ -40,10 +40,12 @@ def main():
         cleanup(stop_event)
 
 def cleanup(stop_event):
-  print("\n... Shutting down RealtimeWind application")
+    # TODO: it must be replaced by a non-static call.
+    AnemometerWatcher.clean_gpio()
+    print("\n... Shutting down RealtimeWind application")
 
-  # Signal non-daemon threads to finish their jobs
-  stop_event.set()
+    # Signal non-daemon threads to finish their jobs
+    stop_event.set()
 
 if __name__ == '__main__':
     main()
