@@ -1,6 +1,7 @@
 from app_config import ApplicationConfigData, InvalidConfigFileError
 from sensor_data import AnemometerData
-from sensor_watcher import AnemometerWatcher
+#from sensor_watcher import AnemometerWatcher
+from sensor_watcher_factory import SensorWatcherFactory
 from data_sync import WindServerSynchronizer
 from console_reporter import WindDataConsoleReporter
 
@@ -15,8 +16,8 @@ def main():
     try:
         config_data  = ApplicationConfigData(config_fn)
         speed_data   = AnemometerData()
-        speed_sensor = AnemometerWatcher(config_data.raspberry_anemometer_pin(),
-                                         speed_data)
+        speed_sensor = SensorWatcherFactory.create_anemometer_watcher(config_data.raspberry_anemometer_pin(),
+                                                                      speed_data)
 
         # The threading.Event is used to signal non-daemon threads that the
         # main thread has died.
