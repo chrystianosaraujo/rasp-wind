@@ -1,6 +1,7 @@
 {
   "raspberry": {
-     "anemometer_pin": 27,
+     "anemometer_pin": 17,
+     "led_pin": 27,
      "console_report_interval": 1.10
   },
   "server": {
