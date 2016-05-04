@@ -1,6 +1,5 @@
 from app_config import ApplicationConfigData, InvalidConfigFileError
 from sensor_data import AnemometerData
-#from sensor_watcher import AnemometerWatcher
 from sensor_watcher_factory import SensorWatcherFactory
 from data_sync import WindServerSynchronizer
 from console_reporter import WindDataConsoleReporter
@@ -35,16 +34,16 @@ def main():
         speed_sensor.start_watching()
 
     except InvalidConfigFileError, error:
-      print(error)
+        print(error)
 
     except(KeyboardInterrupt, SystemExit):
         cleanup(stop_event)
 
-def cleanup(stop_event):
-    # TODO: it must be replaced by a non-static call.
-    AnemometerWatcher.clean_gpio()
-    print("\n... Shutting down RealtimeWind application")
+    finally:
+        # Cleanup sensor data
+        speed_sensor.cleanup()
 
+def cleanup(stop_event):
     # Signal non-daemon threads to finish their jobs
     stop_event.set()
 
